@@ -1,1 +1,1 @@
-# clothing-tracker-frontend
+# Clothing Tracker Frontend
