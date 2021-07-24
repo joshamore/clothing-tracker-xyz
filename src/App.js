@@ -5,6 +5,8 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
+import { clothingTypes, clothingConditionType } from './helpers/constants';
+
 const CoreContainer = styled(Container)`
   display: flex;
   justify-content: center;
@@ -41,17 +43,6 @@ const AddClothingButton = styled(Button)`
   margin-top: 8px;
 `;
 
-const clothingTypes = [
-  ['🎩 accessory', 'accessory'],
-  ['👕 top', 'top'],
-  ['👖 pants', 'pants'],
-  ['🥾 shoes', 'shoes'],
-];
-const clothingConditionType = [
-  ['🤩 new', 'new'],
-  ['💸 used', 'used'],
-];
-
 const App = () => {
   const [formInput, setFormInput] = useState({
     clothingType: null,
@@ -83,7 +74,7 @@ const App = () => {
                 Clothing Type
               </option>
               {clothingTypes.map((type) => (
-                <option value={type[1]}>{type[0]}</option>
+                <option value={type.name}>{type.name}</option>
               ))}
             </StyledSelect>
 
@@ -96,7 +87,9 @@ const App = () => {
                 Condition
               </option>
               {clothingConditionType.map((type) => (
-                <option value={type[1]}>{type[0]}</option>
+                <option
+                  value={type.name}
+                >{`${type.name} ${type.emoji}`}</option>
               ))}
             </StyledSelect>
 
