@@ -39,6 +39,13 @@ const StyledSelect = styled.select`
   border-radius: 8px;
 `;
 
+const StyledTextInput = styled.input`
+  border-radius: 8px;
+  margin: 0 8px;
+  padding: 8px;
+  width: 100%;
+`;
+
 const AddClothingButton = styled(Button)`
   margin-top: 8px;
 `;
@@ -47,6 +54,7 @@ const App = () => {
   const [formInput, setFormInput] = useState({
     clothingType: null,
     clothingCondition: null,
+    clothingName: '',
   });
 
   // Form input handler
@@ -69,12 +77,15 @@ const App = () => {
               name='clothingType'
               id='clothing-type-selector'
               onChange={handleChange}
+              defaultValue={''}
             >
-              <option value='' selected disabled>
+              <option value='' disabled>
                 Clothing Type
               </option>
               {clothingTypes.map((type) => (
-                <option value={type.name}>{type.name}</option>
+                <option key={type.name} value={type.name}>
+                  {type.name}
+                </option>
               ))}
             </StyledSelect>
 
@@ -82,16 +93,26 @@ const App = () => {
               name='clothingCondition'
               id='clothing-condition-selector'
               onChange={handleChange}
+              defaultValue={''}
             >
-              <option value='' selected disabled>
+              <option value='' disabled>
                 Condition
               </option>
               {clothingConditionType.map((type) => (
                 <option
+                  key={type.name}
                   value={type.name}
                 >{`${type.name} ${type.emoji}`}</option>
               ))}
             </StyledSelect>
+
+            <StyledTextInput
+              type='text'
+              name='clothingName'
+              value={formInput.clothingName}
+              onChange={handleChange}
+              placeholder='Clothing Item Name'
+            />
 
             <AddClothingButton
               color='primary'
