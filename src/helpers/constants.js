@@ -1,8 +1,8 @@
 export const clothingTypes = [
-  { name: 'accessory' },
-  { name: 'top' },
-  { name: 'pants' },
-  { name: 'shoes' },
+  { name: 'accessory', id: 3 },
+  { name: 'top', id: 2 },
+  { name: 'pants', id: 1 },
+  { name: 'shoes', id: 4 },
 ];
 
 export const clothingConditionType = [
