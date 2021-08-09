@@ -28,16 +28,6 @@ const App = () => {
         <Route path='/' exact component={Home} />
       </Switch>
     </Router>
-    // <div>
-    //   {!session.data ? (
-    //     <Signup />
-    //   ) : (
-    //     <>
-    //       <p>Nice</p>
-    //       <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
-    //     </>
-    //   )}
-    // </div>
   );
 };
 
