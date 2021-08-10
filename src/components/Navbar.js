@@ -18,19 +18,20 @@ const Navbar = ({ isLoggedIn }) => {
     <AppBar position='static'>
       <Toolbar>
         <Typography variant='h6'>👕 Clothing Tracker</Typography>
-        <MenuButton edge='start' color='inherit' aria-label='menu'>
-          {isLoggedIn ? (
-            <Button
-              variant='contained'
-              color='secondary'
-              onClick={() => supabase.auth.signOut()}
-            >
-              Sign Out
-            </Button>
-          ) : (
+
+        {isLoggedIn ? (
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => supabase.auth.signOut()}
+          >
+            Sign Out
+          </Button>
+        ) : (
+          <MenuButton edge='start' color='inherit' aria-label='menu'>
             <MenuIcon />
-          )}
-        </MenuButton>
+          </MenuButton>
+        )}
       </Toolbar>
     </AppBar>
   );

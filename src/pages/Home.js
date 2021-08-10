@@ -1,17 +1,7 @@
-import { supabase } from '../helpers/supabaseClient';
 import { useSession } from '../helpers/hooks';
 import { Link } from 'react-router-dom';
 import Spinner from '@material-ui/core/CircularProgress';
 import Navbar from '../components/Navbar';
-
-const DummyLoggedInHome = () => {
-  return (
-    <>
-      <p>Nice - you're logged in.</p>
-      <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
-    </>
-  );
-};
 
 const App = () => {
   const session = useSession();
@@ -21,10 +11,10 @@ const App = () => {
 
   return (
     <div>
+      <Navbar isLoggedIn={!!session.data} />
+      <h1>Clothing Tracker</h1>
       {!session.data ? (
         <>
-          <Navbar />
-          <h1>Clothing Tracker</h1>
           <div>
             <Link to='login'>Log In</Link>
             <br />
@@ -32,7 +22,9 @@ const App = () => {
           </div>
         </>
       ) : (
-        <DummyLoggedInHome />
+        <div>
+          Go to <Link to='/add'>Add</Link> page.
+        </div>
       )}
     </div>
   );

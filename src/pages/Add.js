@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+import { useSession } from '../helpers/hooks';
+import { Redirect } from 'react-router-dom';
+import { supabase } from '../helpers/supabaseClient';
 import styled from 'styled-components';
+import Spinner from '@material-ui/core/CircularProgress';
 import Navbar from '../components/Navbar';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { clothingTypes, clothingConditionType } from '../helpers/constants';
 
@@ -55,10 +62,19 @@ const AddClothingButton = styled(Button)`
 
 const Add = () => {
   const [formInput, setFormInput] = useState({
-    clothingType: null,
-    clothingCondition: null,
+    clothingType: '',
+    clothingCondition: '',
     clothingName: '',
+    purchasePrice: 10,
   });
+
+  // Get user session if it exists
+  const session = useSession();
+
+  // Render spinner while session is loading
+  if (session.loading) return <Spinner />;
+  // Redirect to home if no session
+  if (!session.loading && !session.data) return <Redirect to='/' />;
 
   // Form input handler
   const handleChange = (event) => {
@@ -68,9 +84,52 @@ const Add = () => {
     });
   };
 
+  const handleSubmit = async () => {
+    const { clothingType, clothingCondition, clothingName, purchasePrice } =
+      formInput;
+
+    const userId = session?.data?.user?.id;
+    const clothingTypeId = clothingTypes.find(
+      (el) => el.name === clothingType
+    )?.id;
+
+    try {
+      const { data, error } = await supabase
+        .from('clothing_item')
+        .insert({
+          user_id: userId,
+          name: clothingName,
+          clothing_type: clothingTypeId,
+          purchase_condition: clothingCondition,
+          purchase_price: purchasePrice,
+        })
+        .single();
+
+      if (error) {
+        throw new Error(error.message);
+      } else if (data) {
+        const recordName = data?.name;
+        toast.success(
+          recordName ? `Added ${recordName} 🤑` : 'Added new clothing item 🤑'
+        );
+
+        // Clearing form input
+        setFormInput({
+          clothingType: '',
+          clothingCondition: '',
+          clothingName: '',
+          purchasePrice: 10,
+        });
+      }
+    } catch (error) {
+      console.error(error.message);
+      toast.error('Unable to add clothing item 😞');
+    }
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar isLoggedIn={!!session.data} />
       <CoreContainer>
         <InputContainer elevation={1}>
           <h2>Add new clothing item</h2>
@@ -80,7 +139,7 @@ const Add = () => {
               name='clothingType'
               id='clothing-type-selector'
               onChange={handleChange}
-              defaultValue={''}
+              value={formInput.clothingType}
             >
               <option value='' disabled>
                 Clothing Type
@@ -96,7 +155,7 @@ const Add = () => {
               name='clothingCondition'
               id='clothing-condition-selector'
               onChange={handleChange}
-              defaultValue={''}
+              value={formInput.clothingCondition}
             >
               <option value='' disabled>
                 Condition
@@ -120,13 +179,15 @@ const Add = () => {
             <AddClothingButton
               color='primary'
               variant='contained'
-              onClick={() => console.log(formInput)}
+              onClick={handleSubmit}
             >
               Add
             </AddClothingButton>
           </form>
         </InputContainer>
       </CoreContainer>
+
+      <ToastContainer position='bottom-right' />
     </>
   );
 };
