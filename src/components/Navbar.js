@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-const MenuButton = styled(IconButton)`
+const ButtonHolder = styled.div`
   margin-left: auto;
 `;
 
@@ -20,17 +20,21 @@ const Navbar = ({ isLoggedIn }) => {
         <Typography variant='h6'>👕 Clothing Tracker</Typography>
 
         {isLoggedIn ? (
-          <Button
-            variant='contained'
-            color='secondary'
-            onClick={() => supabase.auth.signOut()}
-          >
-            Sign Out
-          </Button>
+          <ButtonHolder>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={() => supabase.auth.signOut()}
+            >
+              Sign Out
+            </Button>
+          </ButtonHolder>
         ) : (
-          <MenuButton edge='start' color='inherit' aria-label='menu'>
-            <MenuIcon />
-          </MenuButton>
+          <ButtonHolder>
+            <IconButton edge='start' color='inherit' aria-label='menu'>
+              <MenuIcon />
+            </IconButton>
+          </ButtonHolder>
         )}
       </Toolbar>
     </AppBar>
