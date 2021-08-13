@@ -43,9 +43,13 @@ const StyledSelect = styled.select`
   margin: 8px;
   padding: 8px;
   border-radius: 8px;
-  &option::before {
-    content: 'hey';
-  }
+`;
+
+const StyledNumberInput = styled.input`
+  width: 100%;
+  margin: 8px;
+  padding: 8px;
+  border-radius: 8px;
 `;
 
 const StyledTextInput = styled.input`
@@ -64,7 +68,7 @@ const Add = () => {
     clothingType: '',
     clothingCondition: '',
     clothingName: '',
-    purchasePrice: 10,
+    purchasePrice: 0,
   });
 
   // Get user session if it exists
@@ -117,7 +121,7 @@ const Add = () => {
           clothingType: '',
           clothingCondition: '',
           clothingName: '',
-          purchasePrice: 10,
+          purchasePrice: 0,
         });
       }
     } catch (error) {
@@ -148,7 +152,6 @@ const Add = () => {
                 </option>
               ))}
             </StyledSelect>
-
             <StyledSelect
               name='clothingCondition'
               id='clothing-condition-selector'
@@ -166,6 +169,14 @@ const Add = () => {
               ))}
             </StyledSelect>
 
+            <StyledNumberInput
+              type='number'
+              name='purchasePrice'
+              placeholder='Purchase Price'
+              value={formInput.purchasePrice}
+              onChange={handleChange}
+            />
+
             <StyledTextInput
               type='text'
               name='clothingName'
@@ -173,7 +184,6 @@ const Add = () => {
               onChange={handleChange}
               placeholder='Clothing Item Name'
             />
-
             <AddClothingButton
               color='primary'
               variant='contained'
