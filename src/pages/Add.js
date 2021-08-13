@@ -3,14 +3,13 @@ import { useSession } from '../helpers/hooks';
 import { Redirect } from 'react-router-dom';
 import { supabase } from '../helpers/supabaseClient';
 import styled from 'styled-components';
+import CoreLayout from '../components/CoreLayout';
 import Spinner from '@material-ui/core/CircularProgress';
-import Navbar from '../components/Navbar';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import { clothingTypes, clothingConditionType } from '../helpers/constants';
 
@@ -128,8 +127,7 @@ const Add = () => {
   };
 
   return (
-    <>
-      <Navbar isLoggedIn={!!session.data} />
+    <CoreLayout isLoggedIn={!!session.data}>
       <CoreContainer>
         <InputContainer elevation={1}>
           <h2>Add new clothing item</h2>
@@ -186,9 +184,7 @@ const Add = () => {
           </form>
         </InputContainer>
       </CoreContainer>
-
-      <ToastContainer position='bottom-right' />
-    </>
+    </CoreLayout>
   );
 };
 

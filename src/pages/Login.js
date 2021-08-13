@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../helpers/supabaseClient';
-import Navbar from '../components/Navbar';
+import CoreLayout from '../components/CoreLayout';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -20,8 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <Navbar />
+    <CoreLayout>
       <h1>Log In (Existing user)</h1>
       <p>Log in via magic link with your email below</p>
       <div>
@@ -43,7 +42,7 @@ const Login = () => {
           {loading ? <span>Loading</span> : <span>Send magic link</span>}
         </button>
       </div>
-    </div>
+    </CoreLayout>
   );
 };
 

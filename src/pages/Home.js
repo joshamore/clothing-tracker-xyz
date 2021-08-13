@@ -1,7 +1,7 @@
 import { useSession } from '../helpers/hooks';
 import { Link } from 'react-router-dom';
+import CoreLayout from '../components/CoreLayout';
 import Spinner from '@material-ui/core/CircularProgress';
-import Navbar from '../components/Navbar';
 
 const App = () => {
   const session = useSession();
@@ -10,8 +10,7 @@ const App = () => {
   if (session.loading) return <Spinner />;
 
   return (
-    <div>
-      <Navbar isLoggedIn={!!session.data} />
+    <CoreLayout isLoggedIn={!!session.data}>
       <h1>Clothing Tracker</h1>
       {!session.data ? (
         <>
@@ -26,7 +25,7 @@ const App = () => {
           Go to <Link to='/add'>Add</Link> page.
         </div>
       )}
-    </div>
+    </CoreLayout>
   );
 };
 
