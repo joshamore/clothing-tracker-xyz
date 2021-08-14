@@ -21,11 +21,6 @@ const View = () => {
     }
   }, [session]);
 
-  // Render spinner while session is loading
-  if (session.loading) return <Spinner />;
-  // Redirect to home if no session
-  if (!session.loading && !session.data) return <Redirect to='/' />;
-
   const getClothingItems = async () => {
     let { data, error } = await supabase.from('clothing_item').select('*');
 
