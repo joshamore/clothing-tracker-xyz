@@ -3,13 +3,12 @@ import { useSession } from '../helpers/hooks';
 import { Redirect } from 'react-router-dom';
 import { supabase } from '../helpers/supabaseClient';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 import CoreLayout from '../components/CoreLayout';
 import Spinner from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-
-import { toast } from 'react-toastify';
 
 import { clothingTypes, clothingConditionType } from '../helpers/constants';
 
@@ -68,7 +67,7 @@ const Add = () => {
     clothingType: '',
     clothingCondition: '',
     clothingName: '',
-    purchasePrice: 0,
+    purchasePrice: null,
   });
 
   // Get user session if it exists
@@ -121,7 +120,7 @@ const Add = () => {
           clothingType: '',
           clothingCondition: '',
           clothingName: '',
-          purchasePrice: 0,
+          purchasePrice: null,
         });
       }
     } catch (error) {
