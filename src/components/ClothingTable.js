@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -22,24 +23,20 @@ const ClothingTable = ({ clothingItems }) => {
         <TableHead>
           <TableRow>
             <TableHeaderCell>Name</TableHeaderCell>
-            {/* <TableHeaderCell align='right'>Purchase Condition</TableHeaderCell> */}
-            <TableHeaderCell align='right'>Purchase Date</TableHeaderCell>
-            <TableHeaderCell align='right'>Clothing Type</TableHeaderCell>
+            <TableHeaderCell>Purchase Date</TableHeaderCell>
+            <TableHeaderCell>Clothing Type</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {clothingItems.map((row) => (
             <TableRow key={row.id}>
               <TableCell component='th' scope='row'>
-                {row.name}
+                <Link to={`/item/${row.id}`}>{row.name}</Link>
               </TableCell>
-              <TableCell align='right' component='th' scope='row'>
-                {row.purchase_condition.toUpperCase()}
-              </TableCell>
-              {/* <TableCell align='right' component='th' scope='row'>
+              <TableCell component='th' scope='row'>
                 {dayjs(row.purchase_date).format('DD/MM/YYYY')}
-              </TableCell> */}
-              <TableCell align='right' component='th' scope='row'>
+              </TableCell>
+              <TableCell component='th' scope='row'>
                 {getClothingTypeNameFromId(row.clothing_type)}
               </TableCell>
             </TableRow>
