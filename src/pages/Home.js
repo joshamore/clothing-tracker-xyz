@@ -22,7 +22,12 @@ const App = () => {
         </>
       ) : (
         <div>
-          Go to <Link to='/add'>Add</Link> page.
+          <p>
+            Go to <Link to='/add'>Add</Link> page.
+          </p>
+          <p>
+            Go to <Link to='/view'>View</Link> page.
+          </p>
         </div>
       )}
     </CoreLayout>
