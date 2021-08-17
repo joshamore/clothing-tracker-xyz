@@ -54,7 +54,7 @@ const Navbar = ({ isLoggedIn }) => {
             onClose={handleClose}
           >
             {isLoggedIn ? (
-              <>
+              <div>
                 <MenuItem onClick={handleClose} component={Link} to='/add'>
                   ➕ Add Clothing
                 </MenuItem>
@@ -62,16 +62,16 @@ const Navbar = ({ isLoggedIn }) => {
                   👀 View Wardrobe
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>👋 Logout</MenuItem>
-              </>
+              </div>
             ) : (
-              <>
+              <div>
                 <MenuItem onClick={handleClose} component={Link} to='/login'>
                   Login
                 </MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to='/signup'>
                   Sign Up
                 </MenuItem>
-              </>
+              </div>
             )}
           </Menu>
         </ButtonHolder>
