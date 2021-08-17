@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import CoreLayout from '../components/CoreLayout';
 import Spinner from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
+import ClothingItemHistory from '../components/ClothingItemHistory';
 import { getClothingTypeNameFromId } from '../helpers/utils';
 
 const CoreContainer = styled.div`
@@ -17,6 +18,7 @@ const CoreContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `;
+
 const ItemCard = styled(Paper)`
   margin: 8px;
   padding: 8px;
@@ -34,7 +36,7 @@ const Item = () => {
     data: null,
   });
 
-  // Fetch clothing items on pageload
+  // Fetch clothing item on pageload
   useEffect(() => {
     const getClothingItem = async () => {
       let { data, error } = await supabase
@@ -97,6 +99,11 @@ const Item = () => {
               {` ${getClothingTypeNameFromId(clothingItem.data.clothing_type)}`}
             </p>
           </ItemCard>
+
+          <ClothingItemHistory
+            id={id}
+            purchasePrice={clothingItem.data.purchase_price}
+          />
         </CoreContainer>
       )}
     </CoreLayout>
