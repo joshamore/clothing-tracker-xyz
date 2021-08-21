@@ -19,3 +19,16 @@ export const getClothingTypeNameFromId = (clothingTypeId) => {
     return '';
   }
 };
+
+/**
+ * Helper function to return cost per wear
+ *
+ * @param {number} purchasePrice - The price of the clothing item.
+ * @param {Array} clothingItemHistory - The wear history of the clothing item.
+ *
+ * @return {number} - The cost per wear.
+ * */
+export const getCostPerWear = (purchasePrice, clothingItemHistory) => {
+  const wearCount = clothingItemHistory.length;
+  return wearCount === 0 ? purchasePrice : purchasePrice / wearCount;
+};

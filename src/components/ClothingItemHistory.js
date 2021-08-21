@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { supabase } from '../helpers/supabaseClient';
+import { getCostPerWear } from '../helpers/utils';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import Spinner from '@material-ui/core/CircularProgress';
@@ -71,7 +72,8 @@ const ClothingItemHistory = ({ id, purchasePrice }) => {
         <ItemCard>
           <p>Wear Count: {clothingItemHistory.data.length}</p>
           <p>
-            Cost Per Wear: {purchasePrice / clothingItemHistory.data.length}
+            Cost Per Wear:
+            {` $${getCostPerWear(purchasePrice, clothingItemHistory.data)}`}
           </p>
         </ItemCard>
       )}
