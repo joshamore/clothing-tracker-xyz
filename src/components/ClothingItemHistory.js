@@ -25,7 +25,7 @@ const ItemCard = styled(Paper)`
 `;
 
 /**
- * Renders a card contianing the history of a specified clothing item
+ * Renders a card containing the history of a specified clothing item
  *
  * @param {string} id - The id of the clothing item.
  * @param {number} purchasePrice - The original purchase price.
