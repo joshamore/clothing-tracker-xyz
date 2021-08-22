@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { clothingTypes } from '../helpers/constants';
 
 /**
@@ -31,4 +32,11 @@ export const getClothingTypeNameFromId = (clothingTypeId) => {
 export const getCostPerWear = (purchasePrice, clothingItemHistory) => {
   const wearCount = clothingItemHistory.length;
   return wearCount === 0 ? purchasePrice : purchasePrice / wearCount;
+};
+
+/**
+ * Converts a JavaScript date to the format used by the API.
+ * */
+export const convertDateToApiFormat = (date) => {
+  return dayjs(date).format('YYYY-MM-DD');
 };

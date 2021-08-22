@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 
 const CoreContainer = styled.div`
   width: 100%;
-  margin-top: 16px;
+  margin-top: 8px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

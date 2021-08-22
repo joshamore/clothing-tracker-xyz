@@ -8,7 +8,9 @@ import { toast } from 'react-toastify';
 import CoreLayout from '../components/CoreLayout';
 import Spinner from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import ClothingItemHistory from '../components/ClothingItemHistory';
+import AddWearDialog from '../components/AddWearDialog';
 import { getClothingTypeNameFromId } from '../helpers/utils';
 
 const CoreContainer = styled.div`
@@ -28,9 +30,17 @@ const ItemCard = styled(Paper)`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 16px;
+`;
+
 const Item = () => {
   const session = useSession();
   const { id } = useParams();
+  const [openAddWearDialog, setOpenAddWearDialog] = useState(false);
   const [clothingItem, setClothingItem] = useState({
     loading: true,
     data: null,
@@ -81,6 +91,11 @@ const Item = () => {
         <Spinner />
       ) : (
         <CoreContainer>
+          <AddWearDialog
+            open={openAddWearDialog}
+            setOpen={setOpenAddWearDialog}
+            clothingItem={clothingItem.data}
+          />
           <ItemCard>
             <h2>{clothingItem.data.name}</h2>
             <p>
@@ -99,6 +114,16 @@ const Item = () => {
               {` ${getClothingTypeNameFromId(clothingItem.data.clothing_type)}`}
             </p>
           </ItemCard>
+
+          <ButtonContainer>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => setOpenAddWearDialog(true)}
+            >
+              Add Wear
+            </Button>
+          </ButtonContainer>
 
           <ClothingItemHistory
             id={id}
