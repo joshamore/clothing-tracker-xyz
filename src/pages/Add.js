@@ -46,14 +46,14 @@ const StyledSelect = styled.select`
 
 const StyledNumberInput = styled.input`
   width: 100%;
-  margin: 8px;
+  margin: 0 8px 8px 8px;
   padding: 8px;
   border-radius: 8px;
 `;
 
 const StyledTextInput = styled.input`
   border-radius: 8px;
-  margin: 0 8px;
+  margin: 0 8px 8px 8px;
   padding: 8px;
   width: 100%;
 `;
@@ -63,12 +63,15 @@ const AddClothingButton = styled(Button)`
 `;
 
 const Add = () => {
+  const [pendingResponse, setPendingResponse] = useState(false);
   const [formInput, setFormInput] = useState({
     clothingType: '',
     clothingCondition: '',
     clothingName: '',
-    purchasePrice: null,
+    nickname: '',
+    purchasePrice: '',
   });
+  const [validateForm, setValidateForm] = useState(true);
 
   // Get user session if it exists
   const session = useSession();
@@ -90,12 +93,17 @@ const Add = () => {
     const { clothingType, clothingCondition, clothingName, purchasePrice } =
       formInput;
 
+    setPendingResponse(true);
+
     const userId = session?.data?.user?.id;
     const clothingTypeId = clothingTypes.find(
       (el) => el.name === clothingType
     )?.id;
 
     try {
+      const nicknameUnique = await isNicknameInputUnique();
+      if (!nicknameUnique) throw new Error('Nickname is not unique');
+
       const { data, error } = await supabase
         .from('clothing_item')
         .insert({
@@ -103,6 +111,7 @@ const Add = () => {
           name: clothingName,
           clothing_type: clothingTypeId,
           purchase_condition: clothingCondition,
+          nickname: formInput.nickname,
           purchase_price: purchasePrice,
         })
         .single();
@@ -120,12 +129,42 @@ const Add = () => {
           clothingType: '',
           clothingCondition: '',
           clothingName: '',
-          purchasePrice: null,
+          nickname: '',
+          purchasePrice: '',
         });
       }
     } catch (error) {
       console.error(error.message);
       toast.error('Unable to add clothing item 😞');
+    } finally {
+      setPendingResponse(false);
+    }
+  };
+
+  // Checks if nickname input is unique
+  const isNicknameInputUnique = async () => {
+    setPendingResponse(true);
+
+    const userId = session?.data?.user?.id;
+
+    try {
+      let { data, error } = await supabase
+        .from('clothing_item')
+        .select('*')
+        .match({ user_id: userId, nickname: formInput.nickname });
+
+      if (error) {
+        throw new Error(error.message);
+      } else if (data) {
+        const isUnique = !!!data.length;
+        setValidateForm(isUnique);
+        return isUnique;
+      }
+    } catch (error) {
+      console.error(error.message);
+      toast.error('Error checking if nickname is unique 😞');
+    } finally {
+      setPendingResponse(false);
     }
   };
 
@@ -168,14 +207,6 @@ const Add = () => {
               ))}
             </StyledSelect>
 
-            <StyledNumberInput
-              type='number'
-              name='purchasePrice'
-              placeholder='Purchase Price'
-              value={formInput.purchasePrice}
-              onChange={handleChange}
-            />
-
             <StyledTextInput
               type='text'
               name='clothingName'
@@ -183,10 +214,29 @@ const Add = () => {
               onChange={handleChange}
               placeholder='Clothing Item Name'
             />
+
+            <StyledTextInput
+              type='text'
+              name='nickname'
+              value={formInput.nickname}
+              onChange={handleChange}
+              placeholder='Nickname or tracking code'
+              onBlur={isNicknameInputUnique}
+              disabled={pendingResponse}
+            />
+
+            <StyledNumberInput
+              type='number'
+              name='purchasePrice'
+              placeholder='Purchase Price'
+              value={formInput.purchasePrice}
+              onChange={handleChange}
+            />
             <AddClothingButton
               color='primary'
               variant='contained'
               onClick={handleSubmit}
+              disabled={pendingResponse || !validateForm}
             >
               Add
             </AddClothingButton>
