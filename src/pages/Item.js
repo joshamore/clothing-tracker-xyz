@@ -98,6 +98,7 @@ const Item = () => {
           />
           <ItemCard>
             <h2>{clothingItem.data.name}</h2>
+            <p>Nickname: {clothingItem.data.nickname}</p>
             <p>
               Purchase Date:
               {` ${dayjs(clothingItem.data.purchase_date).format(
