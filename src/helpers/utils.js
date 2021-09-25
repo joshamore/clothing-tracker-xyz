@@ -22,7 +22,7 @@ export const getClothingTypeNameFromId = (clothingTypeId) => {
 };
 
 /**
- * Helper function to return cost per wear
+ * Helper function to return cost per wear. Rounds to 2 decimal places.
  *
  * @param {number} purchasePrice - The price of the clothing item.
  * @param {Array} clothingItemHistory - The wear history of the clothing item.
@@ -31,7 +31,11 @@ export const getClothingTypeNameFromId = (clothingTypeId) => {
  * */
 export const getCostPerWear = (purchasePrice, clothingItemHistory) => {
   const wearCount = clothingItemHistory.length;
-  return wearCount === 0 ? purchasePrice : purchasePrice / wearCount;
+  const costPerWear =
+    wearCount === 0 ? purchasePrice : purchasePrice / wearCount;
+
+  // Rounds cost to 2 decimal places
+  return Math.round(costPerWear * 100) / 100;
 };
 
 /**

@@ -62,8 +62,6 @@ const ClothingItemHistory = ({ id, purchasePrice }) => {
     getClothingItemHistory();
   }, [id]);
 
-  console.log(clothingItemHistory);
-
   return (
     <CoreContainer>
       {clothingItemHistory.loading ? (
