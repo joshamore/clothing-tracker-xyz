@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../helpers/supabaseClient';
+import { toast } from 'react-toastify';
 import CoreLayout from '../components/CoreLayout';
 
 const Login = () => {
@@ -11,9 +12,9 @@ const Login = () => {
       setLoading(true);
       const { error } = await supabase.auth.signIn({ email });
       if (error) throw error;
-      alert('Check your email for the login link!');
+      toast.info('Check your email for the login link!');
     } catch (error) {
-      alert(error.error_description || error.message);
+      toast.error(error.error_description || error.message);
     } finally {
       setLoading(false);
     }
