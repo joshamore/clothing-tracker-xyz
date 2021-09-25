@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import CoreLayout from '../components/CoreLayout';
 import Spinner from '@material-ui/core/CircularProgress';
 
-const App = () => {
+const Home = () => {
   const session = useSession();
 
   // Render spinner while session is loading
@@ -34,4 +34,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
