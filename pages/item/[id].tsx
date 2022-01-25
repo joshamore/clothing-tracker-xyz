@@ -24,7 +24,7 @@ const CoreContainer = styled.div`
 `;
 
 const ItemCard = styled(Paper)`
-	margin: 8px;
+	margin: 16px;
 	padding: 16px;
 	max-width: 370px;
 `;
@@ -131,10 +131,10 @@ const Item = () => {
 						clothingItem={clothingItem.data}
 					/>
 					<ItemCard>
-						<Typography variant="h4" component="h2">
+						<Typography variant="h4" component="h2" align="center">
 							{name}
 						</Typography>
-						<ItemCardText>{`Nickname: ${nickname}`}</ItemCardText>
+						{nickname && <ItemCardText>{`Nickname: ${nickname}`}</ItemCardText>}
 						<ItemCardText>{`Purchase Date: ${purchaseDate}`}</ItemCardText>
 						<ItemCardText>{`Purchase Condition: ${purchaseCondition}`}</ItemCardText>
 						<ItemCardText>{`Purchase Price: $${purchasePrice}`}</ItemCardText>
