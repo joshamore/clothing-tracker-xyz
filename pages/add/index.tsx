@@ -1,68 +1,27 @@
-import React, { useState, ChangeEvent } from "react";
-import styled from "@emotion/styled";
+import { useState, ChangeEvent } from "react";
 import { useRouter } from "next/router";
 
 import { toast } from "react-toastify";
 
-import { supabase } from "../src/helpers/supabaseClient";
-import { useSession } from "../src/helpers/hooks";
-import CoreLayout from "../src/components/CoreLayout";
+import { supabase } from "../../src/helpers/supabaseClient";
+import { useSession } from "../../src/helpers/hooks";
+import CoreLayout from "../../src/components/CoreLayout";
 import Spinner from "@mui/material/CircularProgress";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
-import { clothingTypes, clothingConditionType } from "../src/helpers/constants";
+import {
+	clothingTypes,
+	clothingConditionType,
+} from "../../src/helpers/constants";
 
-const CoreContainer = styled(Container)`
-	display: flex;
-	justify-content: center;
-`;
-
-const InputContainer = styled(Paper)`
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin-top: 16px;
-	padding: 8px 0;
-	width: 300px;
-	border-radius: 16px;
-	h2 {
-		text-align: center;
-		margin: 0 0 8px 0;
-		width: 100%;
-	}
-	form {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-	}
-`;
-
-const StyledSelect = styled.select`
-	width: 120px;
-	margin: 8px;
-	padding: 8px;
-	border-radius: 8px;
-`;
-
-const StyledNumberInput = styled.input`
-	width: 100%;
-	margin: 0 8px 8px 8px;
-	padding: 8px;
-	border-radius: 8px;
-`;
-
-const StyledTextInput = styled.input`
-	border-radius: 8px;
-	margin: 0 8px 8px 8px;
-	padding: 8px;
-	width: 100%;
-`;
-
-const AddClothingButton = styled(Button)`
-	margin-top: 8px;
-`;
+import {
+	CoreContainer,
+	InputContainer,
+	StyledSelect,
+	StyledNumberInput,
+	StyledTextInput,
+	AddClothingButton,
+} from "./add.styles";
 
 const Add = () => {
 	const router = useRouter();
@@ -148,9 +107,18 @@ const Add = () => {
 		}
 	};
 
-	// Checks if nickname input is unique
+	/**
+	 * Returns true if entered nickname is unique OR if nickname is empty.
+	 */
 	const isNicknameInputUnique = async () => {
 		setPendingResponse(true);
+
+		const { nickname } = formInput;
+
+		if (nickname === "") {
+			setPendingResponse(false);
+			return true;
+		}
 
 		const userId = session?.data?.user?.id;
 
@@ -158,7 +126,7 @@ const Add = () => {
 			let { data, error } = await supabase
 				.from("clothing_item")
 				.select("*")
-				.match({ user_id: userId, nickname: formInput.nickname });
+				.match({ user_id: userId, nickname });
 
 			if (error) {
 				throw new Error(error.message);
@@ -179,7 +147,9 @@ const Add = () => {
 		<CoreLayout isLoggedIn={!!session.data}>
 			<CoreContainer>
 				<InputContainer elevation={1}>
-					<h2>Add new clothing item</h2>
+					<Typography variant="h5" component="h2" align="center">
+						Add new clothing item
+					</Typography>
 
 					<form>
 						<StyledSelect
