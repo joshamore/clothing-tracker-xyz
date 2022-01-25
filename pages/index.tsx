@@ -1,7 +1,7 @@
 import { useSession } from "../src/helpers/hooks";
 import Link from "next/link";
 import CoreLayout from "../src/components/CoreLayout";
-import Spinner from "@material-ui/core/CircularProgress";
+import Spinner from "@mui/material/CircularProgress";
 
 const Home = () => {
 	const session = useSession();

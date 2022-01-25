@@ -1,14 +1,15 @@
 import React, { useState, MouseEvent } from "react";
-import Link from "next/link";
-import styled from "styled-components";
+// import Link from "next/link";
+import styled from "@emotion/styled";
 import { supabase } from "../helpers/supabaseClient";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import AppBar from "@mui/material/AppBar";
+import UnstyledLink from "../../src/components/UnstyledLink";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const ButtonHolder = styled.div`
 	margin-left: auto;
@@ -60,20 +61,20 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 						{isLoggedIn ? (
 							<div>
 								<MenuItem onClick={handleClose}>
-									<Link href="/add">➕ Add Clothing</Link>
+									<UnstyledLink href="/add" linkText="➕ Add Clothing" />
 								</MenuItem>
 								<MenuItem onClick={handleClose}>
-									<Link href="/view">👀 View Wardrobe</Link>
+									<UnstyledLink href="/view" linkText="👀 View Wardrobe" />
 								</MenuItem>
 								<MenuItem onClick={handleLogout}>👋 Logout</MenuItem>
 							</div>
 						) : (
 							<div>
 								<MenuItem onClick={handleClose}>
-									<Link href="/login">Login</Link>
+									<UnstyledLink href="/login" linkText="Login" />
 								</MenuItem>
 								<MenuItem onClick={handleClose}>
-									<Link href="/signup">Signup</Link>
+									<UnstyledLink href="/signup" linkText="Signup" />
 								</MenuItem>
 							</div>
 						)}
