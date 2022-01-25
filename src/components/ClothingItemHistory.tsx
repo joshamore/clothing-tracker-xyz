@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { toast } from "react-toastify";
 
 import { supabase } from "../helpers/supabaseClient";
 import { getCostPerWear } from "../helpers/utils";
-import Spinner from "@material-ui/core/CircularProgress";
-import Paper from "@material-ui/core/Paper";
+import Spinner from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 import { ClothingItemHistoryType } from "../helpers/types";
 
@@ -22,9 +23,10 @@ const ItemCard = styled(Paper)`
 	margin: 8px;
 	padding: 8px;
 	max-width: 370px;
-	h2 {
-		margin: 0;
-	}
+`;
+
+const ItemCardText = styled(Typography)`
+	margin: 8px 0;
 `;
 
 interface ClothingItemHistoryProps {
@@ -82,19 +84,17 @@ const ClothingItemHistory = ({
 		getClothingItemHistory();
 	}, [id]);
 
+	const wearCount = clothingItemHistory?.data?.length ?? 0;
+	const costPerWear = getCostPerWear(purchasePrice, clothingItemHistory.data);
+
 	return (
 		<CoreContainer>
 			{clothingItemHistory.loading ? (
 				<Spinner />
 			) : (
 				<ItemCard>
-					<p>Wear Count: {clothingItemHistory.data.length}</p>
-					<p>
-						{`Cost Per Wear: $${getCostPerWear(
-							purchasePrice,
-							clothingItemHistory.data
-						)}`}
-					</p>
+					<ItemCardText>Wear Count: {wearCount}</ItemCardText>
+					<ItemCardText>{`Cost Per Wear: $${costPerWear}`}</ItemCardText>
 				</ItemCard>
 			)}
 		</CoreContainer>

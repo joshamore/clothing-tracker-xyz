@@ -1,6 +1,12 @@
 import { Children } from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import { ServerStyleSheets } from "@material-ui/core";
+import styled from "@emotion/styled";
+import { ServerStyleSheets } from "@mui/styles";
+
+const StyledBody = styled.body`
+	padding: 0;
+	margin: 0;
+`;
 
 export default class MyDocument extends Document {
 	render() {
@@ -12,10 +18,10 @@ export default class MyDocument extends Document {
 						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
 					/>
 				</Head>
-				<body>
+				<StyledBody>
 					<Main />
 					<NextScript />
-				</body>
+				</StyledBody>
 			</Html>
 		);
 	}

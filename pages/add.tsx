@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import { toast } from "react-toastify";
@@ -7,15 +7,12 @@ import { toast } from "react-toastify";
 import { supabase } from "../src/helpers/supabaseClient";
 import { useSession } from "../src/helpers/hooks";
 import CoreLayout from "../src/components/CoreLayout";
-import Spinner from "@material-ui/core/CircularProgress";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+import Spinner from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
-import {
-	clothingTypes,
-	clothingConditionType,
-} from "../src/helpers/constants";
+import { clothingTypes, clothingConditionType } from "../src/helpers/constants";
 
 const CoreContainer = styled(Container)`
 	display: flex;

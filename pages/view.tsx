@@ -4,7 +4,7 @@ import { useSession } from "../src/helpers/hooks";
 import { supabase } from "../src/helpers/supabaseClient";
 import { toast } from "react-toastify";
 import CoreLayout from "../src/components/CoreLayout";
-import Spinner from "@material-ui/core/CircularProgress";
+import Spinner from "@mui/material/CircularProgress";
 import ClothingTable from "../src/components/ClothingTable";
 import { ClothingItemType } from "../src/helpers/types";
 

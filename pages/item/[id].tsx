@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useSession } from "../../src/helpers/hooks";
-import { useRouter } from "next/router";
-import { supabase } from "../../src/helpers/supabaseClient";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
-import CoreLayout from "../../src/components/CoreLayout";
-import Spinner from "@material-ui/core/CircularProgress";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import ClothingItemHistory from "../../src/components/ClothingItemHistory";
-import { ClothingItemType } from "../../src/helpers/types";
-import AddWearDialog from "../../src/components/AddWearDialog";
+import { useRouter } from "next/router";
+import { supabase } from "../../src/helpers/supabaseClient";
+import { useSession } from "../../src/helpers/hooks";
 import { getClothingTypeNameFromId } from "../../src/helpers/utils";
+import { ClothingItemType } from "../../src/helpers/types";
+import CoreLayout from "../../src/components/CoreLayout";
+import ClothingItemHistory from "../../src/components/ClothingItemHistory";
+import AddWearDialog from "../../src/components/AddWearDialog";
+import Spinner from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const CoreContainer = styled.div`
 	width: 100%;
@@ -24,11 +25,12 @@ const CoreContainer = styled.div`
 
 const ItemCard = styled(Paper)`
 	margin: 8px;
-	padding: 8px;
+	padding: 16px;
 	max-width: 370px;
-	h2 {
-		margin: 0;
-	}
+`;
+
+const ItemCardText = styled(Typography)`
+	margin: 8px 0;
 `;
 
 const ButtonContainer = styled.div`
@@ -98,6 +100,25 @@ const Item = () => {
 		return;
 	}
 
+	const {
+		name,
+		nickname,
+		purchase_condition: purchaseCondition,
+		purchase_price: purchasePrice,
+		clothing_type: clothingType,
+	} = clothingItem?.data ?? {
+		name: "",
+		nickname: "",
+		purchase_condition: "",
+		purchase_price: 0,
+		clothing_type: null,
+	};
+
+	const purchaseDate = dayjs(clothingItem?.data?.purchase_date).format(
+		"DD/MM/YYYY"
+	);
+	const renderClothingType = getClothingTypeNameFromId(clothingType ?? null);
+
 	return (
 		<CoreLayout isLoggedIn={!!session.data}>
 			{clothingItem.loading ? (
@@ -110,23 +131,14 @@ const Item = () => {
 						clothingItem={clothingItem.data}
 					/>
 					<ItemCard>
-						<h2>{clothingItem?.data?.name}</h2>
-						<p>Nickname: {clothingItem?.data?.nickname}</p>
-						<p>
-							Purchase Date:
-							{` ${dayjs(clothingItem?.data?.purchase_date).format(
-								"DD/MM/YYYY"
-							)}`}
-						</p>
-						<p>
-							{`Purchase Condition: ${clothingItem?.data?.purchase_condition.toUpperCase()}`}
-						</p>
-						<p>{`Purchase Price: $${clothingItem?.data?.purchase_price}`}</p>
-						<p>
-							{`Clothing Type: ${getClothingTypeNameFromId(
-								clothingItem?.data?.clothing_type ?? null
-							)}`}
-						</p>
+						<Typography variant="h4" component="h2">
+							{name}
+						</Typography>
+						<ItemCardText>{`Nickname: ${nickname}`}</ItemCardText>
+						<ItemCardText>{`Purchase Date: ${purchaseDate}`}</ItemCardText>
+						<ItemCardText>{`Purchase Condition: ${purchaseCondition}`}</ItemCardText>
+						<ItemCardText>{`Purchase Price: $${purchasePrice}`}</ItemCardText>
+						<ItemCardText>{`Clothing Type: ${renderClothingType}`}</ItemCardText>
 					</ItemCard>
 
 					<ButtonContainer>
@@ -139,10 +151,7 @@ const Item = () => {
 						</Button>
 					</ButtonContainer>
 
-					<ClothingItemHistory
-						id={id}
-						purchasePrice={clothingItem?.data?.purchase_price ?? 0}
-					/>
+					<ClothingItemHistory id={id} purchasePrice={purchasePrice ?? 0} />
 				</CoreContainer>
 			)}
 		</CoreLayout>
