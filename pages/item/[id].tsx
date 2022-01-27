@@ -12,6 +12,7 @@ import { ClothingItemType } from "../../src/helpers/types";
 import CoreLayout from "../../src/components/CoreLayout";
 import ClothingItemHistory from "../../src/components/ClothingItemHistory";
 import AddWearDialog from "../../src/components/AddWearDialog";
+import RetireItemDialog from "../../src/components/RetireItemDialog";
 import Spinner from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -64,6 +65,7 @@ const Item = () => {
 		loading: true,
 		data: null,
 	});
+	const [isRetireDialogOpen, setIsRetireDialogOpen] = useState(false);
 
 	// Fetch clothing item on pageload
 	useEffect(() => {
@@ -108,37 +110,16 @@ const Item = () => {
 		return;
 	}
 
-	/**
-	 * Handler to retire a clothing item.
-	 *
-	 * Redirects user back to /view on success.
-	 */
-	const handleRetire = async () => {
-		const { data, error } = await supabase
-			.from("clothing_item")
-			.update({ is_retired: true })
-			.match({ id })
-			.single();
-
-		if (data?.is_retired) {
-			toast.success("Clothing item retired successfully 🎉");
-			router.push("/view");
-		}
-
-		if (error) {
-			console.error(error.message);
-			toast.error("Unable to retire clothing item 😢");
-		}
-	};
-
 	const {
 		name,
+		id: clothingItemId,
 		nickname,
 		purchase_condition: purchaseCondition,
 		purchase_price: purchasePrice,
 		clothing_type: clothingType,
 	} = clothingItem?.data ?? {
 		name: "",
+		id: "",
 		nickname: "",
 		purchase_condition: "",
 		purchase_price: 0,
@@ -156,6 +137,13 @@ const Item = () => {
 				<Spinner />
 			) : (
 				<CoreContainer>
+					<RetireItemDialog
+						open={isRetireDialogOpen}
+						handleClose={() => setIsRetireDialogOpen(false)}
+						clothingItemName={name}
+						clothingItemId={clothingItemId}
+					/>
+
 					<AddWearDialog
 						open={openAddWearDialog}
 						setOpen={setOpenAddWearDialog}
@@ -183,7 +171,7 @@ const Item = () => {
 						<ItemActionButton
 							variant="contained"
 							color="error"
-							onClick={handleRetire}
+							onClick={() => setIsRetireDialogOpen(true)}
 						>
 							Retire
 						</ItemActionButton>
