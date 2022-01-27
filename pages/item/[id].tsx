@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+
 import { supabase } from "../../src/helpers/supabaseClient";
 import { useSession } from "../../src/helpers/hooks";
 import { getClothingTypeNameFromId } from "../../src/helpers/utils";
 import { ClothingItemType } from "../../src/helpers/types";
+
 import CoreLayout from "../../src/components/CoreLayout";
 import ClothingItemHistory from "../../src/components/ClothingItemHistory";
 import AddWearDialog from "../../src/components/AddWearDialog";
@@ -40,6 +42,12 @@ const ButtonContainer = styled.div`
 	margin-top: 16px;
 `;
 
+const ItemActionButton = styled(Button)`
+	&:not(:last-child) {
+		margin-right: 8px;
+	}
+`;
+
 interface ClothingItemState {
 	loading: boolean;
 	data: ClothingItemType | null;
@@ -49,7 +57,7 @@ const Item = () => {
 	const session = useSession();
 
 	const router = useRouter();
-	const id = router.query.id as string;
+	const id = (router?.query?.id as string) ?? "";
 
 	const [openAddWearDialog, setOpenAddWearDialog] = useState(false);
 	const [clothingItem, setClothingItem] = useState<ClothingItemState>({
@@ -71,7 +79,7 @@ const Item = () => {
 					loading: false,
 					data: null,
 				});
-				console.log(error);
+				console.error(error);
 				toast.error("Unable to get clothing item 😢");
 			} else if (data) {
 				setClothingItem({
@@ -99,6 +107,29 @@ const Item = () => {
 		router.push("/view");
 		return;
 	}
+
+	/**
+	 * Handler to retire a clothing item.
+	 *
+	 * Redirects user back to /view on success.
+	 */
+	const handleRetire = async () => {
+		const { data, error } = await supabase
+			.from("clothing_item")
+			.update({ is_retired: true })
+			.match({ id })
+			.single();
+
+		if (data?.is_retired) {
+			toast.success("Clothing item retired successfully 🎉");
+			router.push("/view");
+		}
+
+		if (error) {
+			console.error(error.message);
+			toast.error("Unable to retire clothing item 😢");
+		}
+	};
 
 	const {
 		name,
@@ -142,13 +173,20 @@ const Item = () => {
 					</ItemCard>
 
 					<ButtonContainer>
-						<Button
+						<ItemActionButton
 							variant="contained"
 							color="primary"
 							onClick={() => setOpenAddWearDialog(true)}
 						>
 							Add Wear
-						</Button>
+						</ItemActionButton>
+						<ItemActionButton
+							variant="contained"
+							color="error"
+							onClick={handleRetire}
+						>
+							Retire
+						</ItemActionButton>
 					</ButtonContainer>
 
 					<ClothingItemHistory id={id} purchasePrice={purchasePrice ?? 0} />

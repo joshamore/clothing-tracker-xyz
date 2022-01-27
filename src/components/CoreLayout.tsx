@@ -1,8 +1,5 @@
 import { ReactNode } from "react";
 import Navbar from "./Navbar";
-import { ToastContainer } from "react-toastify";
-
-import "react-toastify/dist/ReactToastify.css";
 
 interface CoreLayoutProps {
 	isLoggedIn: boolean;
@@ -18,7 +15,6 @@ const CoreLayout = ({ isLoggedIn, children }: CoreLayoutProps) => (
 	<>
 		<Navbar isLoggedIn={isLoggedIn} />
 		{children}
-		<ToastContainer position="bottom-right" />
 	</>
 );
 

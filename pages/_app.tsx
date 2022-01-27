@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import type { AppProps } from "next/app";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	useEffect(() => {
@@ -10,7 +13,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		}
 	}, []);
 
-	return <Component {...pageProps} />;
+	return (
+		<>
+			<Component {...pageProps} />
+			<ToastContainer position="bottom-right" />
+		</>
+	);
 };
 
 export default MyApp;

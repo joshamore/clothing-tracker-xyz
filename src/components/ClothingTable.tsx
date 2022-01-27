@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
 import styled from "@emotion/styled";
-import PropTypes from "prop-types";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -22,6 +21,9 @@ interface ClothingTableProps {
 }
 
 const ClothingTable = ({ clothingItems }: ClothingTableProps) => {
+	// Removing retired clothing items
+	const renderClothingItems = clothingItems.filter((item) => !item.is_retired);
+
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="clothing items table">
@@ -33,7 +35,7 @@ const ClothingTable = ({ clothingItems }: ClothingTableProps) => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{clothingItems.map((row) => (
+					{renderClothingItems.map((row) => (
 						<TableRow key={row.id}>
 							<TableCell component="th" scope="row">
 								<Link href={`/item/${row.id}`}>{row.name}</Link>
@@ -50,10 +52,6 @@ const ClothingTable = ({ clothingItems }: ClothingTableProps) => {
 			</Table>
 		</TableContainer>
 	);
-};
-
-ClothingTable.propTypes = {
-	clothingItems: PropTypes.array.isRequired,
 };
 
 export default ClothingTable;

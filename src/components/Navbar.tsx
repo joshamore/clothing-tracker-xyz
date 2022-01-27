@@ -1,5 +1,4 @@
 import React, { useState, MouseEvent } from "react";
-// import Link from "next/link";
 import styled from "@emotion/styled";
 import { supabase } from "../helpers/supabaseClient";
 import AppBar from "@mui/material/AppBar";

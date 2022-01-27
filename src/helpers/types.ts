@@ -38,6 +38,7 @@ export interface ClothingItemType {
 	purchase_date: string;
 	purchase_price: number;
 	user_id: string;
+	is_retired: boolean;
 }
 
 export interface ClothingItemHistoryType {
