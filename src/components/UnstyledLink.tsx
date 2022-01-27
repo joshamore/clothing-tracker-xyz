@@ -3,6 +3,7 @@ import Link from "next/link";
 
 const UnstyledNativeLink = styled.a`
 	text-decoration: none;
+	color: black;
 `;
 
 interface UnstyledLinkProps {
@@ -12,7 +13,7 @@ interface UnstyledLinkProps {
 
 const UnstyledLink = ({ href, linkText }: UnstyledLinkProps) => {
 	return (
-		<Link href={href}>
+		<Link href={href} passHref>
 			<UnstyledNativeLink>{linkText}</UnstyledNativeLink>
 		</Link>
 	);
