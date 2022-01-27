@@ -3,16 +3,13 @@ import { useRouter } from "next/router";
 
 import { toast } from "react-toastify";
 
-import { supabase } from "../../src/helpers/supabaseClient";
-import { useSession } from "../../src/helpers/hooks";
-import CoreLayout from "../../src/components/CoreLayout";
+import { supabase } from "../src/helpers/supabaseClient";
+import { useSession } from "../src/helpers/hooks";
+import CoreLayout from "../src/components/CoreLayout";
 import Spinner from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
-import {
-	clothingTypes,
-	clothingConditionType,
-} from "../../src/helpers/constants";
+import { clothingTypes, clothingConditionType } from "../src/helpers/constants";
 
 import {
 	CoreContainer,
@@ -21,7 +18,7 @@ import {
 	StyledNumberInput,
 	StyledTextInput,
 	AddClothingButton,
-} from "./add.styles";
+} from "../src/styles/add.styles";
 
 const Add = () => {
 	const router = useRouter();
