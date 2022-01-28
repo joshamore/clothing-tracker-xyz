@@ -53,3 +53,24 @@ export const getCostPerWear = (
 export const convertDateToApiFormat = (date: string) => {
 	return dayjs(date).format("YYYY-MM-DD");
 };
+
+/**
+ * Confirms if two provided password strings match.
+ *
+ * Has an optional validation callback (used to set validation state).
+ *
+ * @param {string} password - The password to validate.
+ * @param {string} confirmPassword - The password to validate against.
+ * @param {Function} validationCallback - Optional callback to validate the password.
+ */
+export const validatePasswordMatch = (
+	password: string,
+	confirmPassword: string,
+	validationCallback: Function | null = null
+) => {
+	if (password !== confirmPassword) {
+		if (validationCallback) validationCallback("Passwords do not match.");
+		return false;
+	}
+	return true;
+};

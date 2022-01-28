@@ -26,7 +26,7 @@ const LoginCard = styled(Paper)`
 	padding: 8px 0;
 	width: 300px;
 	border-radius: 16px;
-	h2 {
+	h1 {
 		margin: 0 0 8px 0;
 		width: 100%;
 	}
@@ -57,7 +57,11 @@ const Login = () => {
 			setLoading(true);
 			const signInResponse = await supabase.auth.signIn({ email });
 			const error: ApiError | null = signInResponse?.error ?? null;
+
+			// Throwing error to catch block for handling.
 			if (error) throw error;
+
+			// Creating success toast.
 			toast.info("Check your email for the login link!");
 		} catch (error: any) {
 			toast.error(error.error_description || error.message);
@@ -70,7 +74,7 @@ const Login = () => {
 		<CoreLayout isLoggedIn={false}>
 			<CoreContainer>
 				<LoginCard>
-					<Typography variant="h5" component="h2" align="center">
+					<Typography variant="h5" component="h1" align="center">
 						Log In (Existing user)
 					</Typography>
 					<SubheaderText align="center">
