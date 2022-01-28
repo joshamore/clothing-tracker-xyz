@@ -1,15 +1,15 @@
 import { useState, ChangeEvent } from "react";
 import { useRouter } from "next/router";
-
 import { toast } from "react-toastify";
 
+import { clothingTypes, clothingConditionType } from "../src/helpers/constants";
 import { supabase } from "../src/helpers/supabaseClient";
 import { useSession } from "../src/helpers/hooks";
-import CoreLayout from "../src/components/CoreLayout";
+
 import Spinner from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
-import { clothingTypes, clothingConditionType } from "../src/helpers/constants";
+import CoreLayout from "../src/components/CoreLayout";
 
 import {
 	CoreContainer,

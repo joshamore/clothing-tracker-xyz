@@ -1,6 +1,7 @@
 import { Children } from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import styled from "@emotion/styled";
+
 import { ServerStyleSheets } from "@mui/styles";
 
 const StyledBody = styled.body`

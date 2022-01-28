@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
 
 import { supabase } from "../../src/helpers/supabaseClient";
 import { useSession } from "../../src/helpers/hooks";
 import { getClothingTypeNameFromId } from "../../src/helpers/utils";
 import { ClothingItemType } from "../../src/helpers/types";
 
-import CoreLayout from "../../src/components/CoreLayout";
-import ClothingItemHistory from "../../src/components/ClothingItemHistory";
-import AddWearDialog from "../../src/components/AddWearDialog";
-import RetireItemDialog from "../../src/components/RetireItemDialog";
 import Spinner from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
+import CoreLayout from "../../src/components/CoreLayout";
+import RetireItemDialog from "../../src/components/RetireItemDialog";
+import AddWearDialog from "../../src/components/AddWearDialog";
+import ClothingItemHistory from "../../src/components/ClothingItemHistory";
 
 const CoreContainer = styled.div`
 	width: 100%;
