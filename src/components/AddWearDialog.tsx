@@ -8,7 +8,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import ChangeDate from "./ChangeDate";
 
 import { ClothingItemType } from "../../src/helpers/types";
 import { supabase } from "../helpers/supabaseClient";
@@ -79,8 +78,6 @@ const AddWearDialog = ({ open, setOpen, clothingItem }: AddWearDialogProps) => {
 						<strong>Add Wear</strong> below.
 					</DialogContentText>
 				</DialogContent>
-
-				<ChangeDate date="" setDate={() => {}} />
 
 				<DialogActions>
 					<Button onClick={handleClose} color="secondary" variant="contained">
