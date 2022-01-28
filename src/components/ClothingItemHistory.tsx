@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-
 import { toast } from "react-toastify";
 
 import { supabase } from "../helpers/supabaseClient";
 import { getCostPerWear } from "../helpers/utils";
+import { ClothingItemHistoryType } from "../helpers/types";
+
 import Spinner from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-
-import { ClothingItemHistoryType } from "../helpers/types";
 
 const CoreContainer = styled.div`
 	width: 100%;

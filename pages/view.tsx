@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+
 import { useSession } from "../src/helpers/hooks";
 import { supabase } from "../src/helpers/supabaseClient";
-import { toast } from "react-toastify";
-import CoreLayout from "../src/components/CoreLayout";
-import Spinner from "@mui/material/CircularProgress";
-import ClothingTable from "../src/components/ClothingTable";
 import { ClothingItemType } from "../src/helpers/types";
+
+import Spinner from "@mui/material/CircularProgress";
+
+import CoreLayout from "../src/components/CoreLayout";
+import ClothingTable from "../src/components/ClothingTable";
 
 interface ClothingItemsState {
 	loading: boolean;
