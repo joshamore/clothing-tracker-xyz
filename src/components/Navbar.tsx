@@ -1,4 +1,6 @@
 import React, { useState, MouseEvent } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import { supabase } from "../helpers/supabaseClient";
@@ -11,8 +13,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-import UnstyledLink from "../../src/components/UnstyledLink";
-
 const ButtonHolder = styled.div`
 	margin-left: auto;
 `;
@@ -22,6 +22,8 @@ interface NavbarProps {
 }
 
 const Navbar = ({ isLoggedIn }: NavbarProps) => {
+	const router = useRouter();
+
 	const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null);
 
 	const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -32,9 +34,15 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 		setAnchorEl(null);
 	};
 
-	const handleLogout = () => {
-		supabase.auth.signOut();
+	const handleLogout = async () => {
+		// Logging out the user
+		await supabase.auth.signOut();
+
+		// Close popup menu
 		handleClose();
+
+		// Redirect to home
+		router.push("/");
 	};
 
 	return (
@@ -62,22 +70,22 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 					>
 						{isLoggedIn ? (
 							<div>
-								<MenuItem onClick={handleClose}>
-									<UnstyledLink href="/add" linkText="➕ Add Clothing" />
-								</MenuItem>
-								<MenuItem onClick={handleClose}>
-									<UnstyledLink href="/view" linkText="👀 View Wardrobe" />
-								</MenuItem>
+								<Link href="/add" passHref>
+									<MenuItem onClick={handleClose}>➕ Add Clothing</MenuItem>
+								</Link>
+								<Link href="/view" passHref>
+									<MenuItem onClick={handleClose}>👀 View Wardrobe</MenuItem>
+								</Link>
 								<MenuItem onClick={handleLogout}>👋 Logout</MenuItem>
 							</div>
 						) : (
 							<div>
-								<MenuItem onClick={handleClose}>
-									<UnstyledLink href="/login" linkText="Login" />
-								</MenuItem>
-								<MenuItem onClick={handleClose}>
-									<UnstyledLink href="/signup" linkText="Signup" />
-								</MenuItem>
+								<Link href="/login" passHref>
+									<MenuItem onClick={handleClose}>Login</MenuItem>
+								</Link>
+								<Link href="/signup" passHref>
+									<MenuItem onClick={handleClose}>Signup</MenuItem>
+								</Link>
 							</div>
 						)}
 					</Menu>
