@@ -66,6 +66,8 @@ const Item = () => {
 		loading: true,
 		data: null,
 	});
+	const [shouldRefetchItemHistory, setShouldRefetchItemHistory] =
+		useState(false);
 	const [isRetireDialogOpen, setIsRetireDialogOpen] = useState(false);
 
 	// Fetch clothing item on pageload
@@ -149,6 +151,7 @@ const Item = () => {
 						open={openAddWearDialog}
 						setOpen={setOpenAddWearDialog}
 						clothingItem={clothingItem.data}
+						confirmRefetchRequired={() => setShouldRefetchItemHistory(true)}
 					/>
 					<ItemCard>
 						<Typography variant="h4" component="h2" align="center">
@@ -178,7 +181,12 @@ const Item = () => {
 						</ItemActionButton>
 					</ButtonContainer>
 
-					<ClothingItemHistory id={id} purchasePrice={purchasePrice ?? 0} />
+					<ClothingItemHistory
+						id={id}
+						purchasePrice={purchasePrice ?? 0}
+						shouldRefetchItemHistory={shouldRefetchItemHistory}
+						confirmRefetch={() => setShouldRefetchItemHistory(false)}
+					/>
 				</CoreContainer>
 			)}
 		</CoreLayout>
