@@ -1,6 +1,5 @@
 import React, { useState, MouseEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import { supabase } from "../helpers/supabaseClient";
@@ -22,8 +21,6 @@ interface NavbarProps {
 }
 
 const Navbar = ({ isLoggedIn }: NavbarProps) => {
-	const router = useRouter();
-
 	const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null);
 
 	const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -42,7 +39,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 		handleClose();
 
 		// Redirect to home
-		router.push("/");
+		window.location.href = "/";
 	};
 
 	return (
