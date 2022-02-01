@@ -23,9 +23,15 @@ interface AddWearDialogProps {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 	clothingItem: ClothingItemType | null;
+	confirmRefetchRequired: () => void;
 }
 
-const AddWearDialog = ({ open, setOpen, clothingItem }: AddWearDialogProps) => {
+const AddWearDialog = ({
+	open,
+	setOpen,
+	clothingItem,
+	confirmRefetchRequired,
+}: AddWearDialogProps) => {
 	const [wearDate, setWearDate] = useState(Date.now());
 
 	// Return empty if no clothing item is provided
@@ -55,6 +61,9 @@ const AddWearDialog = ({ open, setOpen, clothingItem }: AddWearDialogProps) => {
 
 				// Clearing date input
 				setWearDate(Date.now());
+
+				// Refetching item history
+				confirmRefetchRequired();
 			}
 		} catch (error: any) {
 			console.error(error.message);

@@ -31,6 +31,8 @@ const ItemCardText = styled(Typography)`
 interface ClothingItemHistoryProps {
 	id: string;
 	purchasePrice: number;
+	shouldRefetchItemHistory: boolean;
+	confirmRefetch: () => void;
 }
 
 interface ClothingItemHistoryState {
@@ -47,6 +49,8 @@ interface ClothingItemHistoryState {
 const ClothingItemHistory = ({
 	id,
 	purchasePrice,
+	shouldRefetchItemHistory,
+	confirmRefetch,
 }: ClothingItemHistoryProps) => {
 	const [clothingItemHistory, setClothingItemHistory] =
 		useState<ClothingItemHistoryState>({
@@ -54,34 +58,44 @@ const ClothingItemHistory = ({
 			data: [],
 		});
 
+	/**
+	 * Fetches the history of a specified clothing item.
+	 */
+	const getClothingItemHistory = async () => {
+		const response = await supabase
+			.from("clothing_track")
+			.select("*")
+			.match({ clothing_item: id });
+
+		const data: Array<ClothingItemHistoryType> | null = response?.data ?? [];
+		const error: any | null = response?.error;
+
+		if (error) {
+			setClothingItemHistory({
+				loading: false,
+				data: [],
+			});
+			console.log(error);
+			toast.error("Unable to get clothing items 😢");
+		} else if (data) {
+			setClothingItemHistory({
+				loading: false,
+				data,
+			});
+		}
+	};
+
 	// Fetch clothing item history on pageload
 	useEffect(() => {
-		const getClothingItemHistory = async () => {
-			const response = await supabase
-				.from("clothing_track")
-				.select("*")
-				.match({ clothing_item: id });
-
-			const data: Array<ClothingItemHistoryType> | null = response?.data ?? [];
-			const error: any | null = response?.error;
-
-			if (error) {
-				setClothingItemHistory({
-					loading: false,
-					data: [],
-				});
-				console.log(error);
-				toast.error("Unable to get clothing items 😢");
-			} else if (data) {
-				setClothingItemHistory({
-					loading: false,
-					data,
-				});
-			}
-		};
-
 		getClothingItemHistory();
 	}, [id]);
+
+	// Triggering refetch on shouldRefetchItemHistory
+	useEffect(() => {
+		if (shouldRefetchItemHistory) {
+			getClothingItemHistory().then(() => confirmRefetch());
+		}
+	}, [shouldRefetchItemHistory, confirmRefetch]);
 
 	const wearCount = clothingItemHistory?.data?.length ?? 0;
 	const costPerWear = getCostPerWear(purchasePrice, clothingItemHistory.data);
