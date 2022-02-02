@@ -92,11 +92,6 @@ const ClothingItemHistory = ({
 
 	// Triggering refetch on shouldRefetchItemHistory
 	useEffect(() => {
-		if (shouldRefetchItemHistory) confirmRefetch();
-	}, [shouldRefetchItemHistory, confirmRefetch]);
-
-	// Triggering refetch on shouldRefetchItemHistory
-	useEffect(() => {
 		if (shouldRefetchItemHistory) {
 			getClothingItemHistory().then(() => confirmRefetch());
 		}
