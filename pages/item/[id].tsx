@@ -9,11 +9,11 @@ import { useSession } from "../../src/helpers/hooks";
 import { getClothingTypeNameFromId } from "../../src/helpers/utils";
 import { ClothingItemType } from "../../src/helpers/types";
 
-import Spinner from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
+import Spinner from "../../src/components/LoadingSpinner";
 import CoreLayout from "../../src/components/CoreLayout";
 import RetireItemDialog from "../../src/components/RetireItemDialog";
 import AddWearDialog from "../../src/components/AddWearDialog";
