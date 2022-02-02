@@ -97,19 +97,18 @@ const ClothingItemHistory = ({
 		}
 	}, [shouldRefetchItemHistory, confirmRefetch]);
 
+	// Return spinner if data loading
+	if (clothingItemHistory.loading) return <Spinner />;
+
 	const wearCount = clothingItemHistory?.data?.length ?? 0;
 	const costPerWear = getCostPerWear(purchasePrice, clothingItemHistory.data);
 
 	return (
 		<CoreContainer>
-			{clothingItemHistory.loading ? (
-				<Spinner />
-			) : (
-				<ItemCard>
-					<ItemCardText>Wear Count: {wearCount}</ItemCardText>
-					<ItemCardText>{`Cost Per Wear: $${costPerWear}`}</ItemCardText>
-				</ItemCard>
-			)}
+			<ItemCard>
+				<ItemCardText>Wear Count: {wearCount}</ItemCardText>
+				<ItemCardText>{`Cost Per Wear: $${costPerWear}`}</ItemCardText>
+			</ItemCard>
 		</CoreContainer>
 	);
 };
