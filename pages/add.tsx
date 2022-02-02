@@ -6,9 +6,9 @@ import { clothingTypes, clothingConditionType } from "../src/helpers/constants";
 import { supabase } from "../src/helpers/supabaseClient";
 import { useSession } from "../src/helpers/hooks";
 
-import Spinner from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
+import Spinner from "../src/components/LoadingSpinner";
 import CoreLayout from "../src/components/CoreLayout";
 
 import {

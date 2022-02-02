@@ -6,8 +6,7 @@ import { useSession } from "../src/helpers/hooks";
 import { supabase } from "../src/helpers/supabaseClient";
 import { ClothingItemType } from "../src/helpers/types";
 
-import Spinner from "@mui/material/CircularProgress";
-
+import Spinner from "../src/components/LoadingSpinner";
 import CoreLayout from "../src/components/CoreLayout";
 import ClothingTable from "../src/components/ClothingTable";
 

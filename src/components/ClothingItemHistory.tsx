@@ -6,9 +6,10 @@ import { supabase } from "../helpers/supabaseClient";
 import { getCostPerWear } from "../helpers/utils";
 import { ClothingItemHistoryType } from "../helpers/types";
 
-import Spinner from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+
+import Spinner from "./LoadingSpinner";
 
 const CoreContainer = styled.div`
 	width: 100%;

@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 
 import { useSession } from "../src/helpers/hooks";
 
-import Spinner from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
+import Spinner from "../src/components/LoadingSpinner";
 import CoreLayout from "../src/components/CoreLayout";
 
 const CoreContainer = styled(Container)`
