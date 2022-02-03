@@ -28,7 +28,7 @@ const CoreContainer = styled.div`
 `;
 
 const ItemCard = styled(Paper)`
-	margin: 16px;
+	margin: 16px 16px 8px 16px;
 	padding: 16px;
 	max-width: 370px;
 `;
@@ -41,7 +41,7 @@ const ButtonContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	margin-top: 16px;
+	margin-top: 8px;
 `;
 
 const ItemActionButton = styled(Button)`
