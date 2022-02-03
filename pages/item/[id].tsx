@@ -99,8 +99,8 @@ const Item = () => {
 		}
 	}, [session, id]);
 
-	// Render spinner while session is loading
-	if (session.loading) return <Spinner />;
+	// Render spinner while data is loading
+	if (session.loading || clothingItem.loading) return <Spinner />;
 
 	// Redirect to home if no session
 	if (!session.loading && !session.data) {
@@ -136,59 +136,55 @@ const Item = () => {
 
 	return (
 		<CoreLayout isLoggedIn={!!session.data}>
-			{clothingItem.loading ? (
-				<Spinner />
-			) : (
-				<CoreContainer>
-					<RetireItemDialog
-						open={isRetireDialogOpen}
-						handleClose={() => setIsRetireDialogOpen(false)}
-						clothingItemName={name}
-						clothingItemId={clothingItemId}
-					/>
+			<CoreContainer>
+				<RetireItemDialog
+					open={isRetireDialogOpen}
+					handleClose={() => setIsRetireDialogOpen(false)}
+					clothingItemName={name}
+					clothingItemId={clothingItemId}
+				/>
 
-					<AddWearDialog
-						open={openAddWearDialog}
-						setOpen={setOpenAddWearDialog}
-						clothingItem={clothingItem.data}
-						confirmRefetchRequired={() => setShouldRefetchItemHistory(true)}
-					/>
-					<ItemCard>
-						<Typography variant="h4" component="h2" align="center">
-							{name}
-						</Typography>
-						{nickname && <ItemCardText>{`Nickname: ${nickname}`}</ItemCardText>}
-						<ItemCardText>{`Purchase Date: ${purchaseDate}`}</ItemCardText>
-						<ItemCardText>{`Purchase Condition: ${purchaseCondition}`}</ItemCardText>
-						<ItemCardText>{`Purchase Price: $${purchasePrice}`}</ItemCardText>
-						<ItemCardText>{`Clothing Type: ${renderClothingType}`}</ItemCardText>
-					</ItemCard>
+				<AddWearDialog
+					open={openAddWearDialog}
+					setOpen={setOpenAddWearDialog}
+					clothingItem={clothingItem.data}
+					confirmRefetchRequired={() => setShouldRefetchItemHistory(true)}
+				/>
+				<ItemCard>
+					<Typography variant="h4" component="h2" align="center">
+						{name}
+					</Typography>
+					{nickname && <ItemCardText>{`Nickname: ${nickname}`}</ItemCardText>}
+					<ItemCardText>{`Purchase Date: ${purchaseDate}`}</ItemCardText>
+					<ItemCardText>{`Purchase Condition: ${purchaseCondition}`}</ItemCardText>
+					<ItemCardText>{`Purchase Price: $${purchasePrice}`}</ItemCardText>
+					<ItemCardText>{`Clothing Type: ${renderClothingType}`}</ItemCardText>
+				</ItemCard>
 
-					<ButtonContainer>
-						<ItemActionButton
-							variant="contained"
-							color="primary"
-							onClick={() => setOpenAddWearDialog(true)}
-						>
-							Add Wear
-						</ItemActionButton>
-						<ItemActionButton
-							variant="contained"
-							color="error"
-							onClick={() => setIsRetireDialogOpen(true)}
-						>
-							Retire
-						</ItemActionButton>
-					</ButtonContainer>
+				<ButtonContainer>
+					<ItemActionButton
+						variant="contained"
+						color="primary"
+						onClick={() => setOpenAddWearDialog(true)}
+					>
+						Add Wear
+					</ItemActionButton>
+					<ItemActionButton
+						variant="contained"
+						color="error"
+						onClick={() => setIsRetireDialogOpen(true)}
+					>
+						Retire
+					</ItemActionButton>
+				</ButtonContainer>
 
-					<ClothingItemHistory
-						id={id}
-						purchasePrice={purchasePrice ?? 0}
-						shouldRefetchItemHistory={shouldRefetchItemHistory}
-						confirmRefetch={() => setShouldRefetchItemHistory(false)}
-					/>
-				</CoreContainer>
-			)}
+				<ClothingItemHistory
+					id={id}
+					purchasePrice={purchasePrice ?? 0}
+					shouldRefetchItemHistory={shouldRefetchItemHistory}
+					confirmRefetch={() => setShouldRefetchItemHistory(false)}
+				/>
+			</CoreContainer>
 		</CoreLayout>
 	);
 };
