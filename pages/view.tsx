@@ -58,7 +58,7 @@ const View = () => {
 	}, [session]);
 
 	// Render spinner while session is loading
-	if (session.loading) return <Spinner />;
+	if (session.loading) return <Spinner hasCoreLayout />;
 
 	// Redirect to home if no session present
 	if (!session.loading && !session.data) {

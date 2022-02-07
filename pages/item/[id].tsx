@@ -99,15 +99,15 @@ const Item = () => {
 		}
 	}, [session, id]);
 
-	// Render spinner while data is loading
-	if (session.loading || clothingItem.loading) return <Spinner />;
+	// Render spinner while data is loading.
+	if (session.loading || clothingItem.loading) return <Spinner hasCoreLayout />;
 
-	// Redirect to home if no session
+	// Redirect to home if no session.
 	if (!session.loading && !session.data) {
 		router.push("/");
 		return;
 	}
-	// Redirect to view if no clothing item
+	// Redirect to view if no clothing item.
 	if (!clothingItem.loading && !clothingItem.data) {
 		router.push("/view");
 		return;

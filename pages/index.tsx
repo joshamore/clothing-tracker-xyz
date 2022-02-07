@@ -40,7 +40,7 @@ const Home = () => {
 	const session = useSession();
 
 	// Render spinner while session is loading
-	if (session.loading) return <Spinner />;
+	if (session.loading) return <Spinner hasCoreLayout />;
 
 	const subheaderText = !session.data
 		? "Login or create a new account to track your clothing items!"
