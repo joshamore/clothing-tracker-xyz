@@ -37,9 +37,10 @@ const Login = () => {
 			if (loginWithPassword) {
 				// Handles login with password
 				signInResponse = await supabase.auth.signIn({ email, password });
+				error = signInResponse?.error ?? null;
 
 				// If login failed, throwing to catch
-				if (error) throw error;
+				if (signInResponse.error) throw error;
 
 				// If login was successful, redirect to home
 				if (signInResponse?.session?.access_token) router.push("/");
