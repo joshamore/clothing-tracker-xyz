@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 import { supabase } from "../src/helpers/supabaseClient";
@@ -19,6 +20,8 @@ import {
 } from "../src/styles/signup.styles";
 
 const Signup = () => {
+	const router = useRouter();
+
 	const [loading, setLoading] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -58,6 +61,9 @@ const Signup = () => {
 
 			// Creating success toast.
 			toast.info("Check your email for your confirmation link!");
+
+			// Redirecting to new account welcome page on success.
+			router.push("/newaccountwelcome");
 		} catch (error: any) {
 			toast.error(error.error_description || error.message);
 		} finally {
