@@ -74,3 +74,8 @@ export const validatePasswordMatch = (
 	}
 	return true;
 };
+
+/**
+ * Checks if the component is being loaded in a browser.
+ */
+export const isBrowser = () => typeof window !== "undefined";
