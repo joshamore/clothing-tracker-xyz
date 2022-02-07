@@ -6,7 +6,10 @@ import { toast } from "react-toastify";
 
 import { supabase } from "../../src/helpers/supabaseClient";
 import { useSession } from "../../src/helpers/hooks";
-import { getClothingTypeNameFromId } from "../../src/helpers/utils";
+import {
+	getClothingTypeNameFromId,
+	capitalizeFirstLetter,
+} from "../../src/helpers/utils";
 import { ClothingItemType } from "../../src/helpers/types";
 
 import Paper from "@mui/material/Paper";
@@ -132,7 +135,12 @@ const Item = () => {
 	const purchaseDate = dayjs(clothingItem?.data?.purchase_date).format(
 		"DD/MM/YYYY"
 	);
-	const renderClothingType = getClothingTypeNameFromId(clothingType ?? null);
+	const renderClothingType = capitalizeFirstLetter(
+		getClothingTypeNameFromId(clothingType ?? null)
+	);
+	const renderPurchaseCondition = capitalizeFirstLetter(
+		purchaseCondition ?? ""
+	);
 
 	return (
 		<CoreLayout isLoggedIn={!!session.data}>
@@ -156,7 +164,7 @@ const Item = () => {
 					</Typography>
 					{nickname && <ItemCardText>{`Nickname: ${nickname}`}</ItemCardText>}
 					<ItemCardText>{`Purchase Date: ${purchaseDate}`}</ItemCardText>
-					<ItemCardText>{`Purchase Condition: ${purchaseCondition}`}</ItemCardText>
+					<ItemCardText>{`Purchase Condition: ${renderPurchaseCondition}`}</ItemCardText>
 					<ItemCardText>{`Purchase Price: $${purchasePrice}`}</ItemCardText>
 					<ItemCardText>{`Clothing Type: ${renderClothingType}`}</ItemCardText>
 				</ItemCard>

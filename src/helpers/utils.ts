@@ -79,3 +79,19 @@ export const validatePasswordMatch = (
  * Checks if the component is being loaded in a browser.
  */
 export const isBrowser = () => typeof window !== "undefined";
+
+/**
+ * Converts the first character in a string to uppercase if the string
+ * contains 1 or more characters.
+ *
+ * @param {string} str - The string to convert.
+ *
+ * @return {string} - The converted string.
+ */
+export const capitalizeFirstLetter = (str: string) => {
+	if (str.length > 0) {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
+	return str;
+};
