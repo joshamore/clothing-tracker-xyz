@@ -24,13 +24,9 @@ const View = () => {
 		data: [],
 	});
 
-	// Fetch clothing items on pageload
-	useEffect(() => {
-		if (session.data) {
-			getClothingItems();
-		}
-	}, [session]);
-
+	/**
+	 * Fetch the user's clothing items from the database
+	 */
 	const getClothingItems = async () => {
 		const clothingItemResponse = await supabase
 			.from("clothing_item")
@@ -53,6 +49,13 @@ const View = () => {
 			});
 		}
 	};
+
+	// Fetch clothing items on pageload
+	useEffect(() => {
+		if (session.data) {
+			getClothingItems();
+		}
+	}, [session]);
 
 	// Render spinner while session is loading
 	if (session.loading) return <Spinner />;
