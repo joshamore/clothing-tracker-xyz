@@ -20,7 +20,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 				<title>Clothing Tracker</title>
 			</Head>
 			<Component {...pageProps} />
-			<ToastContainer position="bottom-right" />
+			<ToastContainer
+				position="bottom-right"
+				pauseOnFocusLoss={false}
+				newestOnTop={false}
+			/>
 		</>
 	);
 };
