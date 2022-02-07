@@ -34,14 +34,6 @@ const Add = () => {
 	});
 	const [validateForm, setValidateForm] = useState(true);
 
-	// Render spinner while session is loading
-	if (session.loading) return <Spinner />;
-	// Redirect to home if no session
-	if (!session.loading && !session.data) {
-		router.push("/");
-		return;
-	}
-
 	// Form input handler
 	const handleChange = (
 		event: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
@@ -139,6 +131,15 @@ const Add = () => {
 			setPendingResponse(false);
 		}
 	};
+
+	// Render spinner while session is loading.
+	if (session.loading) return <Spinner hasCoreLayout />;
+
+	// Redirect to home if no session.
+	if (!session.loading && !session.data) {
+		router.push("/");
+		return;
+	}
 
 	return (
 		<CoreLayout isLoggedIn={!!session.data}>
