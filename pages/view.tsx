@@ -30,7 +30,8 @@ const View = () => {
 	const getClothingItems = async () => {
 		const clothingItemResponse = await supabase
 			.from("clothing_item")
-			.select("*");
+			.select("*")
+			.order("created_datetime", { ascending: false });
 
 		const data: Array<ClothingItemType> | null = clothingItemResponse?.data;
 		const error: any | null = clothingItemResponse?.error;
