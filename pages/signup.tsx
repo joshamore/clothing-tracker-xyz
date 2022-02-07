@@ -1,61 +1,22 @@
 import { useState, useEffect } from "react";
-import styled from "@emotion/styled";
 import { toast } from "react-toastify";
 
 import { supabase } from "../src/helpers/supabaseClient";
 import { SupabaseError as ApiError } from "../src/helpers/types";
 import { validatePasswordMatch } from "../src/helpers/utils";
 
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 import CoreLayout from "../src/components/CoreLayout";
-
-const CoreContainer = styled(Container)`
-	display: flex;
-	justify-content: center;
-`;
-
-const SignupCard = styled(Paper)`
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin-top: 16px;
-	padding: 8px 0;
-	width: 300px;
-	border-radius: 16px;
-	h1 {
-		margin: 0 0 8px 0;
-		width: 100%;
-	}
-`;
-
-const SubheaderText = styled(Typography)`
-	width: 100%;
-	margin: 0 8px 8px;
-`;
-
-const SignupInputContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	width: 100%;
-`;
-
-const SingupInput = styled(TextField)`
-	width: 100%;
-	margin: 0 8px 8px;
-`;
-
-const ValidationErrorText = styled(Typography)`
-	width: 100%;
-	margin-bottom: 8px;
-	color: red;
-	font-style: italic;
-`;
+import {
+	CoreContainer,
+	SignupCard,
+	SubheaderText,
+	SignupInputContainer,
+	SingupInput,
+	ValidationErrorText,
+} from "../src/styles/signup.styles";
 
 const Signup = () => {
 	const [loading, setLoading] = useState(false);
@@ -82,6 +43,7 @@ const Signup = () => {
 			setValidationError
 		);
 
+		// Return early if password is invalid (inline error set in callback).
 		if (!validatePassword) {
 			setLoading(false);
 			return;
@@ -91,7 +53,7 @@ const Signup = () => {
 			const signUpResponse = await supabase.auth.signUp({ email, password });
 			const error: ApiError | null = signUpResponse?.error ?? null;
 
-			// Throwing error to catch block to handle.
+			// Throwing error to catch block for handling.
 			if (error) throw error;
 
 			// Creating success toast.
