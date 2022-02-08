@@ -1,10 +1,10 @@
-# Clothing Tracker Frontend
+# Clothing Tracker
 
-**A tool that enables you to track the cost per wear of your clothing wardrobe.**
+**A tool that enables you to track the cost per wear of your clothing wardrobe 👕🤑.**
 
-Accessible here: https://clothingtracker.xyz.
+Deployed version here: https://clothingtracker.xyz.
 
-## Built with
+## 🛠️ Built with
 * React
 * Next.js
 * MaterialUI
