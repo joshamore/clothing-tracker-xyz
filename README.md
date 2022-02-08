@@ -9,3 +9,4 @@ Deployed version here: https://clothingtracker.xyz.
 * Next.js
 * MaterialUI
 * Supabase.io (database hosting, psql REST APIs, and auth utils)
+* Vercel (Next.js hosting)
