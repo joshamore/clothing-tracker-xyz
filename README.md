@@ -8,4 +8,4 @@ Accessible here: https://clothingtracker.xyz.
 * React
 * Next.js
 * MaterialUI
-* Supabase.io (database hosting and auth utils)
+* Supabase.io (database hosting, psql REST APIs, and auth utils)
