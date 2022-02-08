@@ -89,7 +89,7 @@ const ClothingItemHistory = ({
 	// Fetch clothing item history on pageload
 	useEffect(() => {
 		getClothingItemHistory();
-	}, [id, getClothingItemHistory]);
+	}, [id]);
 
 	// Triggering refetch on shouldRefetchItemHistory
 	useEffect(() => {
