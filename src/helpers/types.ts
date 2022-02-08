@@ -29,6 +29,7 @@ export interface SupabaseError {
 }
 
 export interface ClothingItemType {
+	[key: string]: any;
 	clothing_type: number;
 	created_datetime: string;
 	id: string;

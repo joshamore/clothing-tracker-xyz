@@ -59,7 +59,8 @@ const View = () => {
 	}, [session]);
 
 	// Render spinner while session is loading
-	if (session.loading) return <Spinner hasCoreLayout />;
+	if (session.loading || clothingItems.loading)
+		return <Spinner hasCoreLayout />;
 
 	// Redirect to home if no session present
 	if (!session.loading && !session.data) {
@@ -69,11 +70,7 @@ const View = () => {
 
 	return (
 		<CoreLayout isLoggedIn={!!session.data}>
-			{clothingItems.loading ? (
-				<Spinner />
-			) : (
-				<ClothingTable clothingItems={clothingItems.data} />
-			)}
+			<ClothingTable clothingItems={clothingItems.data} />
 		</CoreLayout>
 	);
 };
