@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import CoreLayout from "../src/components/CoreLayout";
+import TestAccountLoginModal from "../src/components/TestAccountLoginModal";
 import {
 	CoreContainer,
 	LoginCard,
@@ -17,7 +18,12 @@ import {
 	LoginInputContainer,
 	LoginInput,
 	PasswordInput,
+	TestLoginLink,
 } from "../src/styles/login.styles";
+
+// Getting test login details
+const TEST_EMAIL = process?.env?.NEXT_PUBLIC_TEST_EMAIL ?? "";
+const TEST_PASSWORD = process?.env?.NEXT_PUBLIC_TEST_PASSWORD ?? "";
 
 const Login = () => {
 	const router = useRouter();
@@ -26,8 +32,16 @@ const Login = () => {
 	const [loginWithPassword, setLoginWithPassword] = useState<boolean>(false);
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-	const handleLogin = async () => {
+	/**
+	 * Handles login click.
+	 */
+	const handleLogin = async (
+		email: string,
+		password: string,
+		loginWithPassword: boolean
+	) => {
 		try {
 			setLoading(true);
 
@@ -62,6 +76,20 @@ const Login = () => {
 		}
 	};
 
+	/**
+	 * Handles test login click.
+	 */
+	const handleTestLogin = () => {
+		if (TEST_EMAIL && TEST_PASSWORD) {
+			setLoginWithPassword(true);
+			setEmail(TEST_EMAIL);
+			setPassword(TEST_PASSWORD);
+			handleLogin(TEST_EMAIL, TEST_PASSWORD, true);
+		} else {
+			toast.error("Test login unavailable. Sorry about that!");
+		}
+	};
+
 	const subheaderText = loginWithPassword
 		? "Log in with your email address and password below."
 		: "Log in via a magic link sent to your email address below.";
@@ -71,58 +99,80 @@ const Login = () => {
 	const loginButtonText = loginWithPassword ? "Login" : "Send magic link";
 
 	return (
-		<CoreLayout isLoggedIn={false}>
-			<CoreContainer>
-				<LoginCard>
-					<Typography variant="h5" component="h1" align="center">
-						Log In (Existing user)
-					</Typography>
-					<SubheaderText align="center">{subheaderText}</SubheaderText>
+		<>
+			<TestAccountLoginModal
+				open={isModalOpen}
+				handleClose={() => {
+					setIsModalOpen(false);
+				}}
+				handleTestLogin={handleTestLogin}
+			/>
+			<CoreLayout isLoggedIn={false}>
+				<CoreContainer>
+					<LoginCard>
+						<Typography variant="h5" component="h1" align="center">
+							Log In (Existing user)
+						</Typography>
+						<SubheaderText align="center">{subheaderText}</SubheaderText>
 
-					<PasswordButton
-						onClick={() => setLoginWithPassword(!loginWithPassword)}
-					>
-						{loginMethodText}
-					</PasswordButton>
+						<PasswordButton
+							onClick={() => setLoginWithPassword(!loginWithPassword)}
+						>
+							{loginMethodText}
+						</PasswordButton>
 
-					<LoginInputContainer>
-						<LoginInput
-							id="login-email-input"
-							fullWidth
-							variant="outlined"
-							label={email ? "" : "Email"}
-							InputLabelProps={{ shrink: false }}
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-
-						{loginWithPassword && (
-							<PasswordInput
-								id="login-password-input"
+						<LoginInputContainer>
+							<LoginInput
+								id="login-email-input"
 								fullWidth
 								variant="outlined"
-								type="password"
-								label={password ? "" : "Password"}
+								label={email ? "" : "Email"}
 								InputLabelProps={{ shrink: false }}
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
 							/>
-						)}
-					</LoginInputContainer>
 
-					<Button
-						variant="contained"
-						disabled={loading}
-						onClick={(e) => {
-							e.preventDefault();
-							handleLogin();
-						}}
-					>
-						{loading ? <span>Loading...</span> : <span>{loginButtonText}</span>}
-					</Button>
-				</LoginCard>
-			</CoreContainer>
-		</CoreLayout>
+							{loginWithPassword && (
+								<PasswordInput
+									id="login-password-input"
+									fullWidth
+									variant="outlined"
+									type="password"
+									label={password ? "" : "Password"}
+									InputLabelProps={{ shrink: false }}
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+								/>
+							)}
+						</LoginInputContainer>
+
+						<Button
+							variant="contained"
+							disabled={loading}
+							onClick={(e) => {
+								e.preventDefault();
+								handleLogin(email, password, loginWithPassword);
+							}}
+						>
+							{loading ? (
+								<span>Loading...</span>
+							) : (
+								<span>{loginButtonText}</span>
+							)}
+						</Button>
+
+						<TestLoginLink
+							variant="caption"
+							onClick={() => {
+								setIsModalOpen(true);
+							}}
+						>
+							Use test account?
+						</TestLoginLink>
+					</LoginCard>
+				</CoreContainer>
+			</CoreLayout>
+		</>
 	);
 };
 

@@ -50,3 +50,15 @@ export const LoginInput = styled(TextField)`
 export const PasswordInput = styled(LoginInput)`
 	margin-top: 8px;
 `;
+
+export const TestLoginLink = styled(Typography)`
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 8px;
+	font-style: italic;
+	cursor: pointer;
+	:hover {
+		text-decoration: underline;
+	}
+`;
