@@ -35,7 +35,7 @@ const ButtonGroupContainer = styled.div`
 	}
 `;
 
-const about = () => {
+const About = () => {
 	const session = useSession();
 
 	// Render spinner while session is loading
@@ -45,7 +45,7 @@ const about = () => {
 		<CoreLayout isLoggedIn={!!session.data}>
 			<CoreContainer maxWidth="sm">
 				<Typography variant="h3" component="h1">
-					What's this?
+					What&apos;s this?
 				</Typography>
 				<HeroText>
 					ClothingTracker.xyz is an application to track your clothing items 👕.
@@ -82,4 +82,4 @@ const about = () => {
 	);
 };
 
-export default about;
+export default About;
