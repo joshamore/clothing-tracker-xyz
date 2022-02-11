@@ -57,7 +57,9 @@ const Login = () => {
 				if (signInResponse.error) throw error;
 
 				// If login was successful, redirect to home
-				if (signInResponse?.session?.access_token) router.push("/");
+				if (signInResponse?.session?.access_token) {
+					router.push("/");
+				}
 			} else {
 				// Handles login via magic link
 				signInResponse = await supabase.auth.signIn({ email });
