@@ -73,6 +73,9 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 								<Link href="/view" passHref>
 									<MenuItem onClick={handleClose}>👀 View Wardrobe</MenuItem>
 								</Link>
+								<Link href="/about" passHref>
+									<MenuItem onClick={handleClose}>🤔 About</MenuItem>
+								</Link>
 								<MenuItem onClick={handleLogout}>👋 Logout</MenuItem>
 							</div>
 						) : (
@@ -82,6 +85,9 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 								</Link>
 								<Link href="/signup" passHref>
 									<MenuItem onClick={handleClose}>Signup</MenuItem>
+								</Link>
+								<Link href="/about" passHref>
+									<MenuItem onClick={handleClose}>About</MenuItem>
 								</Link>
 							</div>
 						)}
