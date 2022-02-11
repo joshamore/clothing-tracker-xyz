@@ -113,7 +113,7 @@ const Item = () => {
 	// Redirect to view if no clothing item.
 	if (!clothingItem.loading && !clothingItem.data) {
 		router.push("/view");
-		return;
+		return <></>;
 	}
 
 	const {

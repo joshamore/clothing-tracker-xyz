@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import { useSession } from "../src/helpers/hooks";
@@ -38,7 +37,6 @@ const ButtonGroupContainer = styled.div`
 
 const about = () => {
 	const session = useSession();
-	const router = useRouter();
 
 	// Render spinner while session is loading
 	if (session.loading) return <Spinner hasCoreLayout />;

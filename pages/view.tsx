@@ -65,7 +65,7 @@ const View = () => {
 	// Redirect to home if no session present
 	if (!session.loading && !session.data) {
 		router.push("/");
-		return;
+		return <></>;
 	}
 
 	return (

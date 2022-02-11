@@ -138,7 +138,7 @@ const Add = () => {
 	// Redirect to home if no session.
 	if (!session.loading && !session.data) {
 		router.push("/");
-		return;
+		return <></>;
 	}
 
 	return (
